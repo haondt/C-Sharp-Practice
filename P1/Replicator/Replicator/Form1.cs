@@ -52,11 +52,8 @@ namespace Replicator
         {
             // update global variable based on check value
             noSpaces = checkBox1.Checked;
-            if (noSpaces)
-            {
-                // Verify that the output folder follows the constraint
-                error_messages();
-            }
+            // Verify that the output folder follows the constraint
+            error_messages();
         }
 
 
@@ -97,11 +94,6 @@ namespace Replicator
         {
             // Verify that folder exists
             validOutput = Directory.Exists(textBox2.Text);
-            if (!validOutput)
-            {
-
-                label4.ForeColor = Color.AliceBlue;
-            }
             // update error message
             error_messages();
         }
@@ -123,6 +115,11 @@ namespace Replicator
             {
                 validOutput = false;
             }
+            // Otherwise, recompare against existent directory
+            else
+            {
+                validOutput = Directory.Exists(textBox2.Text);
+            }
             // check that input and output names are valid
             button3.Enabled = validInput && validOutput;
 
@@ -139,5 +136,6 @@ namespace Replicator
 
             label4.Text = errorMessage;
         }
+
     }
 }
