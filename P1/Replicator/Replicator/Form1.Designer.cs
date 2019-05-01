@@ -113,9 +113,8 @@
             this.label4.ForeColor = System.Drawing.Color.Red;
             this.label4.Location = new System.Drawing.Point(12, 125);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(124, 13);
+            this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Error message goes here";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // button3
@@ -158,6 +157,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(450, 200);
             this.MinimumSize = new System.Drawing.Size(450, 200);
             this.Name = "Form1";
             this.Text = "Folder Replicator";
