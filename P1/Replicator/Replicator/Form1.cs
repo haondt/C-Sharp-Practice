@@ -13,7 +13,7 @@ namespace Replicator
 {
     public partial class Form1 : System.Windows.Forms.Form
     {
-        private bool noSpaces = false;
+        private bool noSpaces = true;
         private bool validInput = false;
         private bool validOutput = false;
 
