@@ -173,6 +173,7 @@ namespace Versioner
             error_check();
         }
 
+        // Save button is clicked
         private void button2_Click(object sender, EventArgs e)
         {
             if (Directory.Exists(textBox6.Text))
@@ -185,6 +186,11 @@ namespace Versioner
                 {
                     // Move file
                     File.Move(textBox1.Text, textBox6.Text);
+                    // Refresh drop down data
+                    this.projectList = new List<string>();
+                    this.projectList.AddRange(versioner.getProjects());
+                    comboBox1.DataSource = this.projectList;
+
                     // Disable button, since old file now no longer exists
                     this.goodFile = false;
                     button2.Enabled = false;
