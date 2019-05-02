@@ -47,17 +47,41 @@ namespace Replicator
             if(Directory.Exists(this.inPath) && Directory.Exists(this.outPath))
             {
                 if (Form1.IsDirectoryEmpty(this.outPath)){
-                    // Depth first search
-                    string outSubDir = "";
-                    foreach (string inSubDir in Directory.GetDirectories(this.inPath))
+                    // Replicate folder structure
+                    return recursiveBuild(this.inPath, this.outPath);
+                }
+
+            }
+            return false;
+
+        }
+
+        // Copies directories from inPath to outPath
+        private bool recursiveBuild(string inPath, string outPath)
+        {
+            // Depth first search
+            string outSubDir = "";
+            // Simply return false for inaccessible (due to permissions) directories
+            try
+            {
+                foreach (string inSubDir in Directory.GetDirectories(inPath))
+                {
+                    // Generate new directory location
+                    // Replace spaces with hyphens if requested
+                    if (this.noSpaces)
                     {
-                        // Generate new directory location
+                        outSubDir = this.outPath + inSubDir.Substring(this.inPath.Length).Replace(" ", "-");
+                    }
+                    else
+                    {
                         outSubDir = this.outPath + inSubDir.Substring(this.inPath.Length);
-                        // Replace spaces with hyphens if requested
-                        if (this.noSpaces)
-                        {
-                            outSubDir = outSubDir.Replace(" ", "-");
-                        }
+                    }
+
+                    /* If the top-level output directory is inside the input directory, 
+                     * Copy the directory but not its contents.
+                     */
+                    if (inSubDir == this.outPath)
+                    {
                         // Attempt to build directory
                         try
                         {
@@ -68,27 +92,36 @@ namespace Replicator
                             return false;
                         }
                     }
-                    return true;
+                    else
+                    {
+                        // Attempt to build directory
+                        try
+                        {
+                            Directory.CreateDirectory(outSubDir);
+                        }
+                        catch (Exception)
+                        {
+                            return false;
+                        }
+                        // Build subdirectories
+                        if (!recursiveBuild(inSubDir, outSubDir))
+                        {
+                            return false;
+                        }
+                    }
                 }
-
             }
-            return false;
-
-        }
-
-        // Copies directories from inPath to outPath
-        private void recursiveBuild(string inPath, string outPath)
-        {
-            foreach(string subDir in Directory.GetDirectories(inPath))
+            // Omit Directories without read/write access
+            catch (UnauthorizedAccessException)
             {
-                /* If the top-level output directory is inside the input directory, 
-                 * Copy the directory but not its contents.
-                 */
-                if(subDir == this.outPath)
+                // Delete the affected directory
+                if (Directory.Exists(outPath))
                 {
-                    ;
+                    Directory.Delete(outPath);
                 }
+                return true;
             }
+            return true;
         }
     }
 }
