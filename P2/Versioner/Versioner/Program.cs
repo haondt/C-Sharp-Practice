@@ -26,16 +26,12 @@ namespace Versioner
                 fp.Close();
                 // Create versioner
                 versioner = new Versioner(db_location);
-                Console.WriteLine(versioner.AddProject("proj1"));
-                Console.WriteLine(versioner.AddProject("proj 2"));
-                Console.WriteLine(versioner.AddProject("proj_3"));
-                Console.WriteLine(versioner.AddProject("proj-4"));
 
 
                 // run UI
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                Application.Run(new Form1(versioner));
             }
             // Indicate that the file couldn't be found
             catch (DirectoryNotFoundException)
@@ -85,7 +81,7 @@ namespace Versioner
             if (!string.IsNullOrEmpty(project))
             {
                 // Ensure name is alphanumeric
-                if (Regex.IsMatch(project, @"^[a-zA-Z0-9_-]+$"))
+                if (Regex.IsMatch(project, @"^[a-zA-Z0-9-]+$"))
                 {
                     // clean the captilization of the project
                     project = project[0].ToString().ToUpper() + project.Substring(1).ToLower();
@@ -104,6 +100,26 @@ namespace Versioner
                     }
                 }
             }
+            return false;
+        }
+
+        public bool parseFileName(string fileName)
+        {
+            // Check to see if the filename matches expected output
+            if(Regex.IsMatch(fileName, @"^[a-zA-Z0-9-]+_[a-zA-Z0-9-]+_[a-zA-Z0-9-]+_[a-zA-Z0-9-]+\..*$"))
+            {
+                // Parse values
+                string project, name, version, date,extension;
+                string[] fileParts = fileName.Split('_');
+                project = fileParts[0];
+                name = fileParts[1];
+                version = fileParts[2];
+                date = fileParts[3].Split('.')[0];
+                extension = fileName.Split('.')[1];
+                Console.WriteLine(project + "," + name + "," + version + "," + date + "," + extension);
+                return true;
+            }
+            Console.WriteLine("no bueno");
             return false;
         }
             

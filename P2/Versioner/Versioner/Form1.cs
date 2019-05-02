@@ -13,11 +13,18 @@ namespace Versioner
 {
     public partial class Form1 : Form
     {
+        private Versioner versioner;
+        // seperate project list to avoid making versioner list readonly
+        private List<string> projectList = new List<string>();
+
         // Initialization
-        public Form1()
+        public Form1(Versioner versioner)
         {
             InitializeComponent();
             MaximizeBox = false;
+            this.versioner = versioner;
+            this.projectList.AddRange(versioner.getProjects());
+            comboBox1.DataSource = projectList;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,12 +49,23 @@ namespace Versioner
             // Ensure file exists
             if (File.Exists(textBox1.Text))
             {
+                // Attempt to parse input file
+                if (versioner.parseFileName())
+                {
+
+                }
+
 
             }
             else
             {
                 label6.Text = "Input File not found.";
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ;
         }
     }
 }
