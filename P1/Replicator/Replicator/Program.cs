@@ -44,7 +44,7 @@ namespace Replicator
         public bool Build()
         {
             // Perform sanity checks
-            if(Directory.Exists(this.inPath) && Directory.Exists(this.outPath))
+            if(Directory.Exists(this.inPath) && Directory.Exists(this.outPath) && this.inPath != this.outPath)
             {
                 if (Form1.IsDirectoryEmpty(this.outPath)){
                     // Replicate folder structure
