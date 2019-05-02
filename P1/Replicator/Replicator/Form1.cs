@@ -122,19 +122,36 @@ namespace Replicator
             }
             // check that input and output names are valid
             button3.Enabled = validInput && validOutput;
-
+            if (validOutput)
+            {
+                button3.Enabled = IsDirectoryEmpty(textBox2.Text);
+            }
             // Build error message
             string errorMessage = "";
-            if (!validInput)
+            if (!validInput && textBox1.Text != "")
             {
-                errorMessage += "Input folder name is invalid\n";
+                errorMessage += "Input folder name is invalid or doesn't exist.\n";
             }
-            if (!validOutput)
+            if (!validOutput && textBox2.Text != "")
             {
-                errorMessage += "Output folder name is invalid\n";
+                errorMessage += "Output folder name is invalid or doesn't exist.\n";
+            }
+            if (validOutput)
+            {
+                if (!IsDirectoryEmpty(textBox2.Text))
+                {
+                    errorMessage += "Output directory must be empty.\n";
+                }
             }
 
             label4.Text = errorMessage;
+        }
+
+        // Checks if a directory is empty
+        // via Thomas Levesque https://stackoverflow.com/a/954837
+        public bool IsDirectoryEmpty(string path)
+        {
+            return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
     }
