@@ -104,7 +104,25 @@ namespace Replicator
         // Build button is pressed
         private void button3_Click(object sender, EventArgs e)
         {
-            label4.Text = "built";
+            // Create new folder builder and set parameters
+            FolderBuilder builder = new FolderBuilder();
+            builder.setOutPath(textBox2.Text);
+            builder.setInPath(textBox1.Text);
+            builder.setNoSpaces(this.noSpaces);
+
+            // Attempt folder structure generation
+            if (builder.Build())
+            {
+                label4.ForeColor = Color.Black;
+                label4.Text = "Build Successful!";
+                // Disable button to prompt recheck of next in/output folders
+                button3.Enabled = false;
+            }
+            else
+            {
+                label4.ForeColor = Color.Red;
+                label4.Text = "Error in building.";
+            }
         }
 
         // Event concerning error message has passed
@@ -126,7 +144,7 @@ namespace Replicator
             {
                 button3.Enabled = IsDirectoryEmpty(textBox2.Text);
             }
-            // Build error message
+            // Build error message, don't generate error message if field is just empty
             string errorMessage = "";
             if (!validInput && textBox1.Text != "")
             {
@@ -143,13 +161,14 @@ namespace Replicator
                     errorMessage += "Output directory must be empty.\n";
                 }
             }
-
+            // Display error message
+            label4.ForeColor = Color.Red;
             label4.Text = errorMessage;
         }
 
         // Checks if a directory is empty
         // via Thomas Levesque https://stackoverflow.com/a/954837
-        public bool IsDirectoryEmpty(string path)
+        public static bool IsDirectoryEmpty(string path)
         {
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
