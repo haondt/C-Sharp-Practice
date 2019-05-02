@@ -8,8 +8,6 @@
 * Checkbox option to keep spaces in filenames or to replace them with hyphens
 * Input folder **can** be empty, but must be a folder
 * Output folder can be selected (but must be an empty folder),
-or can be typed in as a name (but must either be an empty folder or a
-nonexistent folder. Also cannot be a file).
-  * Outer containing folders will be created if they don't exist.
+or can be typed in as a name (but must an empty folder, existent folder. Cannot be a file).
 ### Deployment
 * Given as a single .exe file.
