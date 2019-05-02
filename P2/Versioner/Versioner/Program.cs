@@ -18,7 +18,7 @@ namespace Versioner
         static void Main()
         {
             // Ensure db location exists
-            string db_location = "C:\\Users\\Noah\\Desktop\\VersionerProjects.txt";
+            string db_location = Application.StartupPath + "\\VersionerProjects.txt";
             try
             {
                 // Open file
