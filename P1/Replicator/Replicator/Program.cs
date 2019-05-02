@@ -20,6 +20,8 @@ namespace Replicator
             Application.Run(new Form1());
         }
     }
+
+    // Recursively reads folders from input folder and creates matching ones in output folder
     public class FolderBuilder
     {
         private string inPath = "";
