@@ -174,7 +174,7 @@
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(488, 20);
             this.dateTimePicker.TabIndex = 15;
-            this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
+            this.dateTimePicker.ValueChanged += new System.EventHandler(this.DateTimePicker_ValueChanged);
             // 
             // OutputFileTextBox
             // 

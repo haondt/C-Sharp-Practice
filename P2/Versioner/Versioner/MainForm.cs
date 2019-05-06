@@ -53,7 +53,7 @@ namespace Versioner
             InitializeComponent();
             MaximizeBox = false;
             this.versioner = versioner;
-            this.projectList.AddRange(versioner.getProjects());
+            this.projectList.AddRange(versioner.GetProjects());
             ProjectComboBox.DataSource = projectList;
         }
 
@@ -117,19 +117,19 @@ namespace Versioner
                     ProjectComboBox.Text = "";
                     VersionTextBox.Text = "";
                     dateTimePicker.Value = DateTime.Today;
-                    error_check();
+                    Error_check();
                 }
             }
             // Empty box is not submittable but doesn't show an error
             else if(InputFileTextBox.Text == "")
             {
                 this.goodFile = false;
-                error_check();
+                Error_check();
             }
             else
             {
                 this.goodFile = false;
-                error_check();
+                Error_check();
                 ErrorMessageLabel.Text = "Input File not found.";
             }
         }
@@ -149,7 +149,7 @@ namespace Versioner
                 goodProject = true;
                 ProjectComboBox.ForeColor = Color.Black;
             }
-            error_check();
+            Error_check();
         }
         
         /// <summary>
@@ -167,7 +167,7 @@ namespace Versioner
                 goodName = true;
                 FileNameTextBox.ForeColor = Color.Black;
             }
-            error_check();
+            Error_check();
         }
         
         /// <summary>
@@ -185,16 +185,16 @@ namespace Versioner
                 goodVersion = true;
                 VersionTextBox.ForeColor = Color.Black;
             }
-            error_check();
+            Error_check();
         }
 
         /// <summary>
         /// Date Change.
         /// </summary>
-        private void dateTimePicker_ValueChanged(object sender, EventArgs e)
+        private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             // Rebuild output file name
-            error_check();
+            Error_check();
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Versioner
                     File.Move(InputFileTextBox.Text, OutputFileTextBox.Text);
                     // Refresh drop down data
                     this.projectList = new List<string>();
-                    this.projectList.AddRange(versioner.getProjects());
+                    this.projectList.AddRange(versioner.GetProjects());
                     ProjectComboBox.DataSource = this.projectList;
 
                     // Disable button, since old file now no longer exists
@@ -237,7 +237,7 @@ namespace Versioner
         /// <summary>
         /// Checks to verify all conditions are good and updates output preview.
         /// </summary>
-        private void error_check()
+        private void Error_check()
         {
             SaveButton.Enabled = goodFile && goodName && goodProject && goodVersion;
             if (SaveButton.Enabled)

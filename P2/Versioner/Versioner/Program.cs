@@ -77,9 +77,9 @@ namespace Versioner
     {
         #region Fields
 
-        private string Db_location;
+        private readonly string Db_location;
         private FileStream fp;
-        private List<string> projects = new List<string>();
+        private readonly List<string> projects = new List<string>();
 
         #endregion
 
@@ -94,13 +94,13 @@ namespace Versioner
         {
             // set Db_location and pull data
             this.Db_location = db_location;
-            this.readProjects();
+            this.ReadProjects();
         }
 
         /// <summary>
         /// Get project list from file and store internally
         /// </summary>
-        public void readProjects()
+        public void ReadProjects()
         {
             // Open file
             this.fp = File.Open(this.Db_location, FileMode.OpenOrCreate);
@@ -118,7 +118,7 @@ namespace Versioner
         /// Fetch internal copy of project names.
         /// </summary>
         /// <returns>List of project names</returns>
-        public List<string> getProjects()
+        public List<string> GetProjects()
         {
             return this.projects;
         }
