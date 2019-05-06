@@ -6,7 +6,7 @@
            Version="1.0.0.0" 
            Manufacturer="Noah" 
            UpgradeCode="9aec8e45-01f2-4fa1-9e66-43097155eb67">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
@@ -18,7 +18,7 @@
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
+			<Directory Id="DesktopFolder">
 				<Directory Id="INSTALLFOLDER" Name="Versioner" />
 			</Directory>
 		</Directory>
@@ -26,11 +26,19 @@
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<Component Id="ProductComponent">
-        <!--<File Source ="C:\Users\Noah\Documents\C-Sharp-Practice\P2\Versioner\Versioner.IntelliLock\Versioner_Locked.exe"/>
--->
+			<Component Id="ProductComponent" Guid="{6FDC5E52-B4F6-4A57-8973-0CEA06C946E2}">
+        <RegistryValue Root="HKCU" Key="Versioner"
+                       Type="string"
+                       Value ="INSTALLFOLDER"
+                       />
         <File Name="Versioner.exe" Source="$(var.Versioner.ProjectDir)..\Versioner.IntelliLock\Versioner_Locked.exe"/>
+      </Component>
+      <Component Id="INSTALLFOLDERREMOVER" Guid="{60A080C3-E743-4617-B495-359D99F76387}">
+        <RegistryValue Root="HKCU" Key="Versioner"
+                       Type="string"
+                       Value ="INSTALLFOLDER"
+                       />
+        <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
       </Component>
 		</ComponentGroup>
 	</Fragment>

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Text.RegularExpressions;
-
-namespace Versioner
+﻿namespace Versioner
 {
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using System.IO;
+    using System.Text.RegularExpressions;
+
     static class Program
     {
         static Versioner versioner;
@@ -17,7 +18,7 @@ namespace Versioner
         [STAThread]
         static void Main()
         {
-            // Ensure db location exists
+            // Ensure db location exists  
             string db_location = Application.StartupPath + "\\VersionerProjects.txt";
             try
             {
