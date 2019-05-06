@@ -1,19 +1,44 @@
-﻿namespace Versioner
+﻿/* ------------------------------------------------------------------------------------------------
+ * 
+ * Name: Program.cs
+ * 
+ * Author: Noah Burghardt
+ * 
+ * Company: University of Alberta
+ * 
+ * Description: Classes to begin execution of program and to handle modification of database file.
+ * 
+ * ------------------------------------------------------------------------------------------------
+ */
+
+namespace Versioner
 {
+    #region Namespaces
 
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
     using System.IO;
     using System.Text.RegularExpressions;
 
+    #endregion
+
+    /// <summary>
+    /// Class containing entry point for program.
+    /// </summary>
     static class Program
     {
+        #region Fields
+
         static Versioner versioner;
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
-        /// The main entry point for the application.
+        /// The main entry point for the application. 
+        /// Also creates db file if it doesn't exist already.
         /// </summary>
         [STAThread]
         static void Main()
@@ -32,7 +57,7 @@
                 // run UI
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1(versioner));
+                Application.Run(new MainForm(versioner));
             }
             // Indicate that the file couldn't be found
             catch (DirectoryNotFoundException)
@@ -40,26 +65,45 @@
                 Console.WriteLine("Unable to find db file.");
             }
         }
+
+        #endregion
+
     }
+
+    /// <summary>
+    /// Provides a set of methods for interacting with database file. 
+    /// </summary>
     public class Versioner
     {
-        private string db_location;
+        #region Fields
+
+        private string Db_location;
         private FileStream fp;
         private List<string> projects = new List<string>();
 
-        // Constructor, assumes that db_location is an existing file
+        #endregion
+
+        #region Public Methods
+        
+        /// <summary>
+        /// Constructor, assumes that Db_location is an existing file.
+        /// Only one should be instantiated to prevent concurrency issues.
+        /// </summary>
+        /// <param name="db_location">The path to the database (plaintext) file.</param>
         public Versioner(string db_location)
         {
-            // set db_location and pull data
-            this.db_location = db_location;
+            // set Db_location and pull data
+            this.Db_location = db_location;
             this.readProjects();
         }
 
-        // Get project list from file and store internally
+        /// <summary>
+        /// Get project list from file and store internally
+        /// </summary>
         public void readProjects()
         {
             // Open file
-            this.fp = File.Open(this.db_location, FileMode.OpenOrCreate);
+            this.fp = File.Open(this.Db_location, FileMode.OpenOrCreate);
             StreamReader reader = new StreamReader(fp);
             string line = "";
             // Read contents
@@ -70,12 +114,24 @@
             }
             this.fp.Close();
         }
-
+        /// <summary>
+        /// Fetch internal copy of project names.
+        /// </summary>
+        /// <returns>List of project names</returns>
         public List<string> getProjects()
         {
             return this.projects;
         }
 
+        /// <summary>
+        /// Adds a project name to internal list and to database file.
+        /// Standardizes casing of project name before adding to file.
+        /// </summary>
+        /// <param name="project">Name of project to add.</param>
+        /// <returns>True if project was added successfully,
+        /// false if project contains illegal characters or is an empty string.</returns>
+        /// <remarks>Method will return true if the project name is already in the list but
+        /// will not create a duplicate entry.</remarks>
         public bool AddProject(string project)
         {
             // Ensure name is valid
@@ -93,7 +149,7 @@
                         // Add project to project list
                         this.projects.Add(project);
                         // Add project to file
-                        using (StreamWriter writer = new StreamWriter(db_location, true))
+                        using (StreamWriter writer = new StreamWriter(Db_location, true))
                         {
                             writer.WriteLine(project);
                         }
@@ -104,8 +160,7 @@
             return false;
         }
 
+        #endregion
 
-        
-            
     }
 }
