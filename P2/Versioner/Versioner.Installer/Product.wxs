@@ -28,8 +28,10 @@
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
 			<Component Id="ProductComponent">
-				<File Source="$(var.Versioner.TargetPath)" />
-			</Component>
+        <!--<File Source ="C:\Users\Noah\Documents\C-Sharp-Practice\P2\Versioner\Versioner.IntelliLock\Versioner_Locked.exe"/>
+-->
+        <File Name="Versioner.exe" Source="$(var.Versioner.ProjectDir)..\Versioner.IntelliLock\Versioner_Locked.exe"/>
+      </Component>
 		</ComponentGroup>
 	</Fragment>
 </Wix>
