@@ -19,7 +19,7 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Versioner.Installer" />
+				<Directory Id="INSTALLFOLDER" Name="Versioner" />
 			</Directory>
 		</Directory>
 	</Fragment>
