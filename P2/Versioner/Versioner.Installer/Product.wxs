@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" 
-           Name="Versioner.Installer" 
-           Language="1033" 
-           Version="1.0.0.0" 
-           Manufacturer="Noah" 
-           UpgradeCode="9aec8e45-01f2-4fa1-9e66-43097155eb67">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define Versioner_TargetDir=$(var.Versioner.TargetDir)?>
+  <Product Id="*" Name="Versioner" Language="1033" Version="1.0.0.0" Manufacturer="Noah" UpgradeCode="9aec8e45-01f2-4fa1-9e66-43097155eb67">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="Versioner.Installer" Level="1">
+		<Feature Id="ProductFeature" Title="Versioner" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
+    
+    <!-- Add UI-->
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    
 	</Product>
 
 	<Fragment>
@@ -26,19 +26,15 @@
 
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- Add locked version of .exe as Versioner.exe-->
 			<Component Id="ProductComponent" Guid="{6FDC5E52-B4F6-4A57-8973-0CEA06C946E2}">
-        <RegistryValue Root="HKCU" Key="Versioner"
-                       Type="string"
-                       Value ="INSTALLFOLDER"
-                       />
-        <File Name="Versioner.exe" Source="$(var.Versioner.ProjectDir)..\Versioner.IntelliLock\Versioner_Locked.exe"/>
+        <RegistryValue Root="HKCU" Key="Versioner" Type="string" Value="INSTALLFOLDER" />
+        <File Name="Versioner.exe" Source="$(var.Versioner.ProjectDir)..\Versioner.IntelliLock\Versioner_Locked.exe" />
       </Component>
+      <!-- Add install folder to uninstall table -->
       <Component Id="INSTALLFOLDERREMOVER" Guid="{60A080C3-E743-4617-B495-359D99F76387}">
-        <RegistryValue Root="HKCU" Key="Versioner"
-                       Type="string"
-                       Value ="INSTALLFOLDER"
-                       />
-        <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Versioner" Type="string" Value="INSTALLFOLDER" />
+        <RemoveFolder Id="INSTALLFOLDER" On="uninstall" />
       </Component>
 		</ComponentGroup>
 	</Fragment>
