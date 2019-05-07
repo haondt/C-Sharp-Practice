@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>caa13ff1-32ad-4ee2-9873-3e2f14d72ed0</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Versioner_Installer.msi</OutputName>
+    <OutputName>Versioner_Installer</OutputName>
     <OutputType>Package</OutputType>
     <Name>Versioner.Installer</Name>
   </PropertyGroup>
