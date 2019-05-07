@@ -9,6 +9,11 @@
 		<Feature Id="ProductFeature" Title="Replicator.Installer" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
+
+    <!-- Add UI-->
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    
 	</Product>
 
 	<Fragment>
