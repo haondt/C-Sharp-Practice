@@ -251,6 +251,27 @@ namespace LINQApp
                 .Contains(keySub, new SubComparer());
         }
 
+        /// <summary>
+        /// Calculate Average score using aggregation
+        /// </summary>
+        /// <returns>Average comment score</returns>
+        public double averageScoreAgg()
+        {
+            // Aggregate all the comment scores 
+            int totalScore = this.comments["comments"]
+                .Aggregate<JToken, int>(0, (s, c) => s += (int)c["score"]);
+            // Divide total score by num comments
+            return totalScore / (double) this.getNumComments();
+        }
+
+        /// <summary>
+        /// Calculate average score using average method
+        /// </summary>
+        /// <returns>Average comment score</returns>
+        public double averageScore()
+        {
+            return this.comments["comments"].Average(c => (int)c["score"]);
+        }
 
     }
 }

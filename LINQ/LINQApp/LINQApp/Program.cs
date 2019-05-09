@@ -76,6 +76,9 @@ namespace LINQApp
                 cs.anyFromSub(sub) ? "contains" : "does not contain",
                 sub);
 
+            // Find average score
+            Console.WriteLine("Average score: {0}", cs.averageScore());
+
             // wait for user input
             Console.ReadKey();
         }
