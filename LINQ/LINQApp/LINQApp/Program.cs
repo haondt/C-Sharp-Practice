@@ -34,7 +34,7 @@ namespace LINQApp
                 term);
 
             // Search for the number of comments from a particular subreddit
-            String sub = "AskReddit";
+            String sub = "AskOuija";
             Console.WriteLine("{0}% of comments come from the {1} subreddit.", 
                 ((float) cs.fromSub(sub).Count() / cs.getNumComments())*100, sub);
 
@@ -44,10 +44,38 @@ namespace LINQApp
             // Search for long comments
             Console.WriteLine("There are {0} long comments.", cs.getNumLongComments());
 
+            // Line break
+            Console.WriteLine("");
+
             // Search for the nth comment
             int index = 301;
-            Console.WriteLine("Comment #{0} reads:\n{1}", index, cs.index(index));
-            
+            Console.WriteLine("Comment #{0} reads:\n{1}\n", index, cs.index(index));
+
+            // Search for the most controversial comment
+            Console.WriteLine("The most controversial comment reads:\n{0}\n", cs.controversialComment());
+
+            // Search for the comment that mentions a term the most
+            term = "salt";
+            Console.WriteLine("The comment that mentions \"{0}\" the most reads:\n{1}\n",
+                term, cs.mentions(term));
+            // Search for the best comment from the most recent 24 hours
+            Console.WriteLine("The best most recent comment reads:\n{0}\n", cs.bestRecent());
+
+            // Search for the most popular subreddit
+            Console.WriteLine("The most popular subreddit is {0}, with {1}% of the comments.",
+                cs.mostActiveSub(),
+                ((float)cs.fromSub(cs.mostActiveSub()).Count() / cs.getNumComments()) * 100);
+
+            // Check if any comments are gilded
+            Console.WriteLine("The data {0} gilded comments.", 
+                cs.anyGold() ? "contains" : "does not contain");
+
+            // Check if any comments come from a particular subreddit
+            sub = "Overwatch";
+            Console.WriteLine("The data {0} comments from r/{1}.",
+                cs.anyFromSub(sub) ? "contains" : "does not contain",
+                sub);
+
             // wait for user input
             Console.ReadKey();
         }
