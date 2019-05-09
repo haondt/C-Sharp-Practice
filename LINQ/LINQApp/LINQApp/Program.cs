@@ -45,7 +45,7 @@ namespace LINQApp
             Console.WriteLine("There are {0} long comments.", cs.getNumLongComments());
 
             // Search for the nth comment
-            int index = 10000;
+            int index = 301;
             Console.WriteLine("Comment #{0} reads:\n{1}", index, cs.index(index));
             
             // wait for user input
